@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/love-peach/electron-demo#readme",
   "devDependencies": {
+    "electron-packager": "^5.0.1",
     "electron-prebuilt": "^1.2.0"
   }
 }
