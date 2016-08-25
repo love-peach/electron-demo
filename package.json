@@ -5,7 +5,7 @@
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "package": "electron-packager ./ --platform=win32 --arch=ia32"
+    "package": "electron-packager ./ --platform=win32 --arch=ia32 --overwrite"
   },
   "repository": {
     "type": "git",
@@ -20,6 +20,7 @@
   "homepage": "https://github.com/love-peach/electron-demo#readme",
   "devDependencies": {
     "electron-packager": "^5.0.1",
-    "electron-prebuilt": "^1.2.0"
+    "electron-prebuilt": "^1.2.0",
+    "grunt-electron-installer": "^2.1.0"
   }
 }

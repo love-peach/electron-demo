@@ -4,12 +4,10 @@ const {app} = electron;
 // 创建原生浏览器窗口的模块。
 const {BrowserWindow} = electron;
 
-const ipc = require('electron').ipcMain;
 
 // 保持一个对于 window 对象的全局引用，如果你不这样做，
 // 当 JavaScript 对象被垃圾回收， window 会被自动地关闭
 let mainWindow;
-let newWindow;
 
 function createWindow() {
     // 创建浏览器窗口。
@@ -20,7 +18,7 @@ function createWindow() {
 
     // 加载应用的 index.html。
     //mainWindow.loadURL(`file://${__dirname}/index.html`);
-    mainWindow.loadURL(`file://${__dirname}/app/index.html`);
+    mainWindow.loadURL('http://mp.test.xiaoyage.com');
 
     // 启用开发工具。
     //mainWindow.webContents.openDevTools();
@@ -56,20 +54,48 @@ app.on('activate', () => {
     }
 });
 
-ipc.on('open-new-window', function () {
-    if (newWindow) {
-        return;
-    }
-    newWindow = new BrowserWindow({
-        height: 500,
-        width: 500,
-    });
-    newWindow.loadUrl(`file://${__dirname}/app/new-window.html`);
-
-    newWindow.on('closed', function () {
-        newWindow = null;
-    });
-});
-
 // 在这文件，你可以续写应用剩下主进程代码。
 // 也可以拆分成几个文件，然后用 require 导入。
+
+var path = require('path');
+var cp = require('child_proess');
+
+var handleSquirrelEvent = function () {
+    if (process.platform != 'win32') {
+        return false;
+    }
+    function executeSquirrelCommand(args, done) {
+        var upddateDotExe = path.resolve(path.dirname(process.execPath, '..', 'update.exe'));
+        var child = cp.spawn(updateDotExe, args, {detached: true});
+        child.on('close', function (code) {
+            done();
+        });
+    }
+    function install (done) {
+        var target = path.basename(process.execPath);
+        executeSquirrelCommand(['--removeShortcut', target], done);
+    }
+    function uninstall (done) {
+        var target = path.basename(process.execPath);
+        executeSquirrelCommand(['--removeShortcut', target], done);
+    }
+    var squirrelEvent = process.argv[1];
+    switch (squirrelEvent) {
+        case '--squirrel-install':
+            install (app.quit);
+            return true;
+        case '--squirrel-updated':
+            install (app.quit);
+            return true;
+        case '--squirrel-obsolete':
+            app.quit();
+            return true;
+        case '--squirrel-uninstall':
+            uninstall (app.quit);
+            return true;
+    }
+    return false;
+};
+if (handleSquirrelEvent()) {
+    return;
+}
