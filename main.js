@@ -12,6 +12,15 @@ var BrowserWindow = require('browser-window');
 // 当 JavaScript 对象被垃圾回收， window 会被自动地关闭
 var mainWindow = null;
 
+
+// You have to pass the filename of `widevinecdmadapter` here, it is
+// * `widevinecdmadapter.plugin` on macOS,
+// * `libwidevinecdmadapter.so` on Linux,
+// * `widevinecdmadapter.dll` on Windows.
+app.commandLine.appendSwitch('widevine-cdm-path', './widevinecdmadapter.dll');
+// The version of plugin can be got from `chrome://plugins` page in Chrome.
+app.commandLine.appendSwitch('widevine-cdm-version', '1.4.8.903');
+
 // Electron 会在初始化后并准备
 // 创建浏览器窗口时，调用这个函数。
 // 部分 API 在 ready 事件触发后才能使用。
@@ -20,6 +29,7 @@ app.on('ready', function createWindow() {
     mainWindow = new BrowserWindow({
         width: 1200,
         height: 800,
+        plugins: true
     });
 
     // 加载应用的 index.html。
