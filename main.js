@@ -1,13 +1,13 @@
-//var electron = require('electron');
+var electron = require('electron');
 // 控制应用生命周期的模块。
-//var app= electron.app;
+var app= electron.app;
 // 创建原生浏览器窗口的模块。
-//var BrowserWindow = electron.BrowserWindow;
+var BrowserWindow = electron.BrowserWindow;
 
 //var app = require('electron').remote.app
 //var BrowserWindow = require('electron').remote.BrowserWindow
-var app = require('app');
-var BrowserWindow = require('browser-window');
+//var app = require('app');
+//var BrowserWindow = require('browser-window');
 
 // 保持一个对于 window 对象的全局引用，如果你不这样做，
 // 当 JavaScript 对象被垃圾回收， window 会被自动地关闭
