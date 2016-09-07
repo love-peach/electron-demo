@@ -4,7 +4,8 @@
 // 创建原生浏览器窗口的模块。
 //var BrowserWindow = electron.BrowserWindow;
 
-
+//var app = require('electron').remote.app
+//var BrowserWindow = require('electron').remote.BrowserWindow
 var app = require('app');
 var BrowserWindow = require('browser-window');
 
@@ -17,9 +18,18 @@ var mainWindow = null;
 // * `widevinecdmadapter.plugin` on macOS,
 // * `libwidevinecdmadapter.so` on Linux,
 // * `widevinecdmadapter.dll` on Windows.
-app.commandLine.appendSwitch('widevine-cdm-path', './widevinecdmadapter.dll');
+app.commandLine.appendSwitch('widevine-cdm-path', './NPCAOSOFT_WEB_PRINT_lodop.dll');
 // The version of plugin can be got from `chrome://plugins` page in Chrome.
 app.commandLine.appendSwitch('widevine-cdm-version', '1.4.8.903');
+console.log(require.resolve('electron'));
+
+
+app.commandLine.appendSwitch('ppapi-flash-path', 'C:/Users/peige/AppData/Local/Google/Chrome/Application/44.0.2403.89/PepperFlash/pepflashplayer.dll');
+
+// Specify flash version, for example, v17.0.0.169 设置版本号
+//app.commandLine.appendSwitch('ppapi-flash-version', '18.0.0.209');
+app.commandLine.appendSwitch('npapi-lodop-path', 'C:/Program Files (x86)/MountTaiSoftware/Lodop/NPCAOSOFT_WEB_PRINT_lodop.dll');
+
 
 // Electron 会在初始化后并准备
 // 创建浏览器窗口时，调用这个函数。
@@ -29,13 +39,15 @@ app.on('ready', function createWindow() {
     mainWindow = new BrowserWindow({
         width: 1200,
         height: 800,
-        plugins: true
+        'web-preferences': {
+            'plugins': true
+        }
     });
 
     // 加载应用的 index.html。
 //    mainWindow.loadURL(`file://${__dirname}/index.html`);
-//    mainWindow.loadURL('file://' + __dirname + '/index.html');
-    mainWindow.loadURL('http://mp.test.xiaoyage.com');
+    mainWindow.loadURL('file://' + __dirname + '/index.html');
+//    mainWindow.loadURL('http://mp.test.xiaoyage.com');
 
     // 启用开发工具。
     mainWindow.webContents.openDevTools();
