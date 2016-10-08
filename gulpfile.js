@@ -8,7 +8,7 @@
             name: 'Jiabangou',
             arch: 'ia32',
             platform: 'win32',
-            version: '0.35.1',
+            version: '1.4.3',
             appVersion: '1.2.0',
             overwrite: true,
             asar: true,
