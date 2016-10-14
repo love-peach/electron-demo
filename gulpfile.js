@@ -15,16 +15,16 @@
             dir: path.join(__dirname, './'),
             out: path.join(__dirname, '../dist'),
             icon: path.join(__dirname, './logo-128.ico'),
-            ignore: ['node_modules', '.idea']
+            ignore: ['node_modules', '.idea', 'document']
         }
         return ElectronPackager(opts, (err, appPath) => {
             if (err) {
-              console.log(err)
-              cb(err)
+                console.log(err)
+                cb(err)
             } else {
-              cb()
+                cb()
             }
         })
-    });
+});
     gulp.task('default', ['electron-pack']);
 })();
